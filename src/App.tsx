@@ -1,9 +1,7 @@
+import Board from './board';
+
 function App() {
-  return (
-    <div>
-      <div>Learn React</div>
-    </div>
-  );
+  return <Board />;
 }
 
 export default App;
