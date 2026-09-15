@@ -11,7 +11,7 @@ export default function Game() {
   const moves = history.map((_, move) => {
     let description;
     if (move > 0) {
-      description = `Go to move # ${move}`;
+      description = `Go to move #${move}`;
     } else {
       description = `Go to game start`;
     }
@@ -52,7 +52,7 @@ function Board({
 }: {
   xIsNext: boolean;
   squares: SquareValue[];
-  onPlay: (nextSqures: SquareValue[]) => void;
+  onPlay: (nextSquares: SquareValue[]) => void;
 }) {
   const winner = calculateWinner(squares);
   let status: string;
@@ -66,13 +66,13 @@ function Board({
     if (squares[i] || winner) {
       return;
     }
-    const nextSqures = squares.slice();
+    const nextSquares = squares.slice();
     if (xIsNext) {
-      nextSqures[i] = 'X';
+      nextSquares[i] = 'X';
     } else {
-      nextSqures[i] = 'O';
+      nextSquares[i] = 'O';
     }
-    onPlay(nextSqures);
+    onPlay(nextSquares);
   }
   return (
     <>
