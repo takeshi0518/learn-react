@@ -1,9 +1,7 @@
+import Game from './game';
+
 function App() {
-  return (
-    <div>
-      <div>Learn React</div>
-    </div>
-  );
+  return <Game />;
 }
 
 export default App;
