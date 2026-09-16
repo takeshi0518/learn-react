@@ -69,8 +69,8 @@ function ProductTable({
   filterText: string;
   inStockOnly: boolean;
 }) {
-  const rows = [];
-  let lastCategory = null;
+  const rows: React.JSX.Element[] = [];
+  let lastCategory: string | null = null;
 
   products.forEach((p) => {
     if (p.name.toLowerCase().indexOf(filterText.toLowerCase()) === -1) {
