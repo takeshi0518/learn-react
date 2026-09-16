@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { PRODUCTS } from './mock';
 
 type Product = {
@@ -8,30 +9,78 @@ type Product = {
 };
 
 export default function FilterableProductTable() {
+  const [filterText, setFilterText] = useState('');
+  const [inStockOnly, setInStockOnly] = useState(false);
+
   return (
     <div>
-      <SearchBar />
-      <ProductTable products={PRODUCTS} />
+      <SearchBar
+        filterText={filterText}
+        inStockOnly={inStockOnly}
+        onFilterTextChange={setFilterText}
+        onInStockOnlyChange={setInStockOnly}
+      />
+      <ProductTable
+        products={PRODUCTS}
+        filterText={filterText}
+        inStockOnly={inStockOnly}
+      />
     </div>
   );
 }
 
-function SearchBar() {
+function SearchBar({
+  filterText,
+  inStockOnly,
+  onFilterTextChange,
+  onInStockOnlyChange,
+}: {
+  filterText: string;
+  inStockOnly: boolean;
+  onFilterTextChange: (v: string) => void;
+  onInStockOnlyChange: (v: boolean) => void;
+}) {
   return (
     <form>
-      <input type="text" placeholder="Search..." />
+      <input
+        type="text"
+        placeholder="Search..."
+        value={filterText}
+        onChange={(e) => onFilterTextChange(e.target.value)}
+      />
       <label>
-        <input type="checkbox" /> only show products in stock
+        <input
+          type="checkbox"
+          checked={inStockOnly}
+          onChange={(e) => onInStockOnlyChange(e.target.checked)}
+        />{' '}
+        only show products in stock
       </label>
     </form>
   );
 }
 
-function ProductTable({ products }: { products: Product[] }) {
+function ProductTable({
+  products,
+  filterText,
+  inStockOnly,
+}: {
+  products: Product[];
+  filterText: string;
+  inStockOnly: boolean;
+}) {
   const rows = [];
   let lastCategory = null;
 
   products.forEach((p) => {
+    if (p.name.toLowerCase().indexOf(filterText.toLowerCase()) === -1) {
+      return;
+    }
+
+    if (inStockOnly && !p.stocked) {
+      return;
+    }
+
     if (p.category !== lastCategory) {
       rows.push(<ProductCategoryRow category={p.category} key={p.category} />);
     }
