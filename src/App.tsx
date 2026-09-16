@@ -1,7 +1,8 @@
 import Game from './game';
+import FilterableProductTable from './product';
 
 function App() {
-  return <Game />;
+  return <FilterableProductTable />;
 }
 
 export default App;
